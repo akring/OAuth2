@@ -509,7 +509,7 @@ open class OAuth2ContextStore {
 	/**
 	Generates a new code verifier string
 	*/
-	func generateCodeVerifier() {
+	public func generateCodeVerifier() {
 		var buffer = [UInt8](repeating: 0, count: 32)
 		_ = SecRandomCopyBytes(kSecRandomDefault, buffer.count, &buffer)
 		codeVerifier = Data(bytes: buffer).base64EncodedString()
@@ -520,7 +520,7 @@ open class OAuth2ContextStore {
 	}
 	
 	
-	func codeChallenge() -> String? {
+	public func codeChallenge() -> String? {
 		guard let verifier = codeVerifier, let data = verifier.data(using: .utf8) else { return nil }
 		var buffer = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
 		data.withUnsafeBytes {
