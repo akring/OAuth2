@@ -130,7 +130,7 @@ open class OAuth2Authorizer: OAuth2AuthorizerUI {
 	- parameter at:   The authorize URL to open
 	- returns:        A Boolean value indicating whether the web authentication session starts successfully.
 	*/
-	@available(iOS 11.0, *)
+	@available(iOS 12.0, *)
 	@discardableResult
 	public func authenticationSessionEmbedded(at url: URL, withRedirect redirect: String) -> Bool {
 		let completionHandler: (URL?, Error?) -> Void = { url, error in
@@ -146,14 +146,9 @@ open class OAuth2Authorizer: OAuth2AuthorizerUI {
 			}
 			self.authenticationSession = nil
 		}
-		
-		if #available(iOS 12, *) {
-			authenticationSession = ASWebAuthenticationSession(url: url, callbackURLScheme: redirect, completionHandler: completionHandler)
-			return (authenticationSession as! ASWebAuthenticationSession).start()
-		} else {
-			authenticationSession = SFAuthenticationSession(url: url, callbackURLScheme: redirect, completionHandler: completionHandler)
-			return (authenticationSession as! SFAuthenticationSession).start()
-		}
+        
+        authenticationSession = ASWebAuthenticationSession(url: url, callbackURLScheme: redirect, completionHandler: completionHandler)
+        return (authenticationSession as! ASWebAuthenticationSession).start()
 	}
 	
 	
